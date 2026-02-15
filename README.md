@@ -2,12 +2,10 @@
 
 A production-ready REST API built with Gin demonstrating clean architecture, JWT authentication, structured logging, middleware design, and observability patterns.
 
-# 🚀 Features
+## Features
 
 ✅ RESTful API with Gin
-
 ✅ JWT Authentication (HS256)
-
 ✅ Custom JWT Middleware
 
 ✅ Request ID / Trace ID propagation (X-Request-Id)
