@@ -9,8 +9,8 @@ import (
 	"syscall"
 	"time"
 
+	"apps-gin/interceptors"
 	logger "apps-gin/internal"
-	"apps-gin/middleware"
 
 	"github.com/gin-gonic/gin"
 	"github.com/joho/godotenv"
@@ -23,11 +23,12 @@ func main() {
 	}
 
 	logger.Init()
-	defer logger.Log.Sync()
+	defer logger.Sync()
 
 	gin.SetMode(gin.ReleaseMode)
 
 	router := gin.New()
+	// catch panics
 	router.Use(gin.Logger(), gin.Recovery())
 
 	router.GET("/health", func(ctx *gin.Context) {
@@ -35,7 +36,7 @@ func main() {
 	})
 
 	protected := router.Group("/api")
-	protected.Use(middleware.JWTAuthMiddleware())
+	protected.Use(interceptors.JWTAuthMiddleware())
 	{
 		protected.GET("/profiles", func(ctx *gin.Context) {
 			ctx.JSON(http.StatusOK, gin.H{"profiles": []interface{}{}})

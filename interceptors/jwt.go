@@ -1,4 +1,4 @@
-package middleware
+package interceptors
 
 import (
 	"net/http"
@@ -23,13 +23,13 @@ func JWTAuthMiddleware() gin.HandlerFunc {
 
 		tokenString := strings.TrimPrefix(authHeader, "Bearer ")
 
-		logger.Log.Infof("token: %s", tokenString)
+		logger.InforF(c, "token: %s", tokenString)
 		token, err := jwt.ParseWithClaims(tokenString, &internal.CustomClaims{}, func(token *jwt.Token) (interface{}, error) {
 			return []byte(os.Getenv("JWT_SECRET")), nil
 		})
 
 		if err != nil || !token.Valid {
-			logger.Log.Errorf("Invalid token %w", err)
+			logger.ErrorF(c, "Invalid token %w", err)
 			c.JSON(http.StatusUnauthorized, gin.H{"error": "Invalid or expired token"})
 			c.Abort()
 			return
