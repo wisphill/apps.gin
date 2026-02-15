@@ -4,27 +4,18 @@ A production-ready REST API built with Gin demonstrating clean architecture, JWT
 
 ## Features
 
-✅ RESTful API with Gin
-✅ JWT Authentication (HS256)
-✅ Custom JWT Middleware
-
-✅ Request ID / Trace ID propagation (X-Request-Id)
-
-✅ Structured logging with Zap
-
-✅ Context-aware logging (trace injection)
-
-✅ Graceful shutdown
-
-✅ Environment config via .env
-
-✅ Clean architecture layering
-
-✅ Unit testing with httptest
-
-✅ Middleware chaining
-
-✅ JSON binding & validation
+- ✅ RESTful API with Gin
+- ✅ JWT Authentication (HS256)
+- ✅ Custom JWT Middleware
+- ✅ Trace ID propagation
+- ✅ Structured logging with Zap
+- ✅ Context-aware logging (trace injection)
+- ✅ Graceful shutdown
+- ✅ Environment config via .env
+- ✅ Clean architecture layering
+- ✅ Unit testing with httptest
+- ✅ Middleware chaining
+- ✅ JSON binding & validation
 
 # Project structure
 
