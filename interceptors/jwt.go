@@ -23,7 +23,7 @@ func JWTAuthMiddleware() gin.HandlerFunc {
 
 		tokenString := strings.TrimPrefix(authHeader, "Bearer ")
 
-		logger.InforF(c, "token: %s", tokenString)
+		logger.InforF(c.Request.Context(), "token: %s", tokenString)
 		token, err := jwt.ParseWithClaims(tokenString, &internal.CustomClaims{}, func(token *jwt.Token) (interface{}, error) {
 			return []byte(os.Getenv("JWT_SECRET")), nil
 		})

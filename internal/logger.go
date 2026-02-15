@@ -3,6 +3,7 @@ package internal
 import (
 	"context"
 
+	"go.opentelemetry.io/otel/trace"
 	"go.uber.org/zap"
 )
 
@@ -24,19 +25,23 @@ func Sync() error {
 	return nil
 }
 
-type contextKey string
-
-const RequestIDKey contextKey = "request_id"
+func TraceIDFromContext(ctx context.Context) string {
+	span := trace.SpanContextFromContext(ctx)
+	if span.HasTraceID() {
+		return span.TraceID().String()
+	}
+	return ""
+}
 
 func LoggerFromContext(ctx context.Context) *zap.SugaredLogger {
-	requestID, _ := ctx.Value(RequestIDKey).(string)
+	traceID := TraceIDFromContext(ctx)
 
-	if requestID == "" {
+	if traceID == "" {
 		return baseLogger.Sugar()
 	}
 
 	return baseLogger.
-		With(zap.String("request_id", requestID)).
+		With(zap.String("trace_id", traceID)).
 		Sugar()
 }
 

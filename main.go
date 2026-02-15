@@ -11,12 +11,15 @@ import (
 
 	"apps-gin/interceptors"
 	logger "apps-gin/internal"
+	"apps-gin/internal/telemetry"
 
 	"github.com/gin-gonic/gin"
 	"github.com/joho/godotenv"
+	"go.opentelemetry.io/contrib/instrumentation/github.com/gin-gonic/gin/otelgin"
 )
 
 func main() {
+	baseCtx := context.Background()
 	err := godotenv.Load()
 	if err != nil {
 		log.Fatal("No .env file found")
@@ -25,9 +28,14 @@ func main() {
 	logger.Init()
 	defer logger.Sync()
 
+	shutdown := telemetry.Init("apps-gin")
+	defer shutdown(baseCtx)
+
 	gin.SetMode(gin.ReleaseMode)
 
 	router := gin.New()
+	// open telemetry middleware
+	router.Use(otelgin.Middleware("apps-gin"))
 	// catch panics
 	router.Use(gin.Logger(), gin.Recovery())
 
