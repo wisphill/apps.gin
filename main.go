@@ -20,9 +20,8 @@ import (
 
 func main() {
 	baseCtx := context.Background()
-	err := godotenv.Load()
-	if err != nil {
-		log.Fatal("No .env file found")
+	if os.Getenv("APP_ENV") == "development" {
+		_ = godotenv.Load()
 	}
 
 	logger.Init()
