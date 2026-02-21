@@ -5,7 +5,7 @@ pipeline {
         // This matches your local build command name
         IMAGE_NAME = "apps.gin"
         // Enable BuildKit for the cache mounts to work
-        // DOCKER_BUILDKIT = '1'
+        DOCKER_BUILDKIT = '1'
     }
 
     stages {
