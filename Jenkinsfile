@@ -19,7 +19,7 @@ pipeline {
                 script {
                     echo "Building the Go service..."
                     // This executes your specific build command
-                    sh "docker build -t ${IMAGE_NAME} ."
+                    sh "docker build --memory=1g --cpu-shares=512 -t apps.gin ."
                 }
             }
         }

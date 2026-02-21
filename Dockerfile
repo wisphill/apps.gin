@@ -13,7 +13,7 @@ RUN go mod download
 COPY . .
 
 # Build static binary
-RUN CGO_ENABLED=0 GOOS=linux go build -o app
+RUN CGO_ENABLED=0 GOOS=linux go build -p 2 -ldflags="-s -w" -o app .
 
 # ---------- Stage 2: Run ----------
 FROM alpine:3.19
