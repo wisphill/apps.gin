@@ -16,7 +16,7 @@ COPY . .
 # Build static binary
 RUN --mount=type=cache,target=/root/.cache/go-build \
     --mount=type=cache,target=/go/pkg/mod \
-    RUN CGO_ENABLED=0 GOOS=linux go build -p 2 -ldflags="-s -w" -o app .
+    CGO_ENABLED=0 GOOS=linux go build -p 2 -ldflags="-s -w" -o app .
 
 # ---------- Stage 2: Run ----------
 FROM alpine:3.19
